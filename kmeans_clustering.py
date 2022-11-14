@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_score
 
 # Importing the mall dataset with pandas
 
@@ -41,10 +42,6 @@ plt.scatter(X[y_kmeans == 1, 0], X[y_kmeans == 1, 1], s=100, c='blue', label='Cl
 
 plt.scatter(X[y_kmeans == 2, 0], X[y_kmeans == 2, 1], s=100, c='green', label='Cluster 3')
 
-plt.scatter(X[y_kmeans == 3, 0], X[y_kmeans == 3, 1], s=100, c='cyan', label='Cluster 4')
-
-plt.scatter(X[y_kmeans == 4, 0], X[y_kmeans == 4, 1], s=100, c='magenta', label='Cluster 5')
-
 plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1], s=300, c='yellow', label='Centroids')
 
 plt.title('Clusters of movies')
@@ -52,3 +49,9 @@ plt.xlabel('Movie ids')
 plt.ylabel('Movie ranks (1-10)')
 plt.legend()
 plt.show()
+
+#Clustering evaluation
+#Silhouette score
+
+silSc = silhouette_score(X, y_kmeans, metric="euclidean")
+print("Silhouette score: " , round(silSc,3))
