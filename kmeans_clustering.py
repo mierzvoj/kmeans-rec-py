@@ -8,7 +8,7 @@ import pandas as pd
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 
-# Importing the mall dataset with pandas
+# Importing the movies csv dataset with pandas
 
 dataset = pd.read_csv('movies.csv')
 X = dataset.iloc[:, [1, 3]].values
@@ -29,7 +29,7 @@ plt.xlabel('Number of clusters')
 plt.ylabel('WCSS')
 plt.show()
 
-# Applying KMeans to the dataset with the optimal number of cluster
+# Applying KMeans to the dataset with the optimal number of cluster, which is 3 in this case
 
 kmeans = KMeans(n_clusters=3, init='k-means++', max_iter=300, n_init=10, random_state=0)
 y_kmeans = kmeans.fit_predict(X)
