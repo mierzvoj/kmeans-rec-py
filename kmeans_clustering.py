@@ -5,13 +5,15 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import seaborn as sns
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
+from sklearn.neighbors import NearestNeighbors
 
 # Importing the movies csv dataset with pandas
 
 dataset = pd.read_csv('movies.csv')
-X = dataset.iloc[:, [1, 3]].values
+X = dataset.iloc[:, [0, 3]].values
 
 # Using the elbow method to find the optimal number of clusters
 
@@ -23,7 +25,8 @@ for i in range(1, 11):
     wcss.append(kmeans.inertia_)
 
 # Plot the graph to visualize the Elbow Method to find the optimal number of cluster  
-plt.plot(range(1, 11), wcss)
+plt.plot(range(1, 11), wcss);
+plt.axvline(2, linestyle='--', color='r')
 plt.title('The Elbow Method')
 plt.xlabel('Number of clusters')
 plt.ylabel('WCSS')
@@ -31,8 +34,9 @@ plt.show()
 
 # Applying KMeans to the dataset with the optimal number of cluster, which is 3 in this case
 
-kmeans = KMeans(n_clusters=3, init='k-means++', max_iter=300, n_init=10, random_state=0)
+kmeans = KMeans(n_clusters=2, init='k-means++', max_iter=300, n_init=10, random_state=0)
 y_kmeans = kmeans.fit_predict(X)
+print(kmeans.cluster_centers_)
 
 # Visualising the clusters
 
@@ -45,7 +49,7 @@ plt.scatter(X[y_kmeans == 2, 0], X[y_kmeans == 2, 1], s=100, c='green', label='C
 plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1], s=300, c='yellow', label='Centroids')
 
 plt.title('Clusters of movies')
-plt.xlabel('Movie ids')
+plt.xlabel('User ids')
 plt.ylabel('Movie ranks (1-10)')
 plt.legend()
 plt.show()
